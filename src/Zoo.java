@@ -1,17 +1,60 @@
+package zoo;
+
 public class Zoo {
     private Animal[] animals;
-    private int nbrAnimals;   // compteur d’animaux
+    private int nbrAnimals;
     private final int nbrCages;
 
-    String name;
-    String city;
+    private String name;
+    private String city;
+
 
     public Zoo(String name, String city, int nbrCages) {
-        this.name = name;
-        this.city = city;
-        this.nbrCages = nbrCages;
-        this.animals = new Animal[nbrCages];
+        setName(name);
+        setCity(city);
+        this.nbrCages = nbrCages > 0 ? nbrCages : 1;
+        this.animals = new Animal[this.nbrCages];
         this.nbrAnimals = 0;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name != null && !name.isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Erreur : le nom du zoo ne doit pas être vide !");
+            this.name = "Unknown Zoo";
+        }
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        if (city != null && !city.isEmpty()) {
+            this.city = city;
+        } else {
+            System.out.println("Erreur : la ville ne doit pas être vide !");
+            this.city = "Unknown City";
+        }
+    }
+
+    public int getNbrAnimals() {
+        return nbrAnimals;
+    }
+
+    public int getNbrCages() {
+        return nbrCages;
+    }
+
+
+    public boolean isZooFull() {
+        return nbrAnimals >= nbrCages;
     }
 
     public boolean addAnimal(Animal animal) {
@@ -40,10 +83,10 @@ public class Zoo {
     public int searchAnimal(Animal animal) {
         for (int i = 0; i < nbrAnimals; i++) {
             if (animals[i].equals(animal)) {
-                return i; // trouvé
+                return i;
             }
         }
-        return -1; // non trouvé
+        return -1;
     }
 
     public boolean removeAnimal(Animal animal) {
@@ -58,16 +101,8 @@ public class Zoo {
         return true;
     }
 
-    public boolean isZooFull() {
-        return nbrAnimals >= nbrCages;
-    }
-
     public static Zoo comparerZoo(Zoo z1, Zoo z2) {
-        if (z1.nbrAnimals >= z2.nbrAnimals) {
-            return z1;
-        } else {
-            return z2;
-        }
+        return (z1.nbrAnimals >= z2.nbrAnimals) ? z1 : z2;
     }
 
     public void displayZoo() {
@@ -79,6 +114,7 @@ public class Zoo {
 
     @Override
     public String toString() {
-        return "Zoo [name=" + name + ", city=" + city + ", nbrCages=" + nbrCages + ", nbrAnimals=" + nbrAnimals + "]";
+        return "Zoo [name=" + name + ", city=" + city +
+                ", nbrCages=" + nbrCages + ", nbrAnimals=" + nbrAnimals + "]";
     }
 }
